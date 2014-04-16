@@ -10,13 +10,13 @@ require 'read_char'
 
 @serial = SerialPort.new("/dev/ttyACM0", "baud" => 1000000)
 
-NUM_PIXELS=500
-NUM_SUBPIXELS=1500
-PAYLOAD_SIZE=1501
+NUM_PIXELS=600
+NUM_SUBPIXELS=NUM_PIXELS*3
+PAYLOAD_SIZE=1801
 
 def wait_until_ready
   r = @serial.readchar
-  $stderr.write if $verbose
+  $stderr.write r if $verbose
   print_from_serial
 
   true
@@ -37,10 +37,10 @@ def show pixels=$p
   end
 
   chunk = ["\n".ord,0]
-  #binding.pry
   @serial.write chunk.pack('C'*chunk.size)
   @serial.flush
   $stderr.write "." if $verbose
+
   return unless wait_until_ready
   #pixels = pixels.map { |i| i == "\n".ord ? "\n\n".bytes : i }.flatten
   pixels = pixels.map { |i| i == 10 ? 11: i }
@@ -107,6 +107,16 @@ class Blur
   end
 end
 
+class RightSide
+  def initialize app
+    @app = app
+  end
+  def call
+    # 88 + 182 + 330 = 600
+    [0]*3*88+@app.call+[0]*3*330
+  end
+end
+
 class Wheel < Effect
   def initialize size=NUM_PIXELS
     @size = size
@@ -129,8 +139,7 @@ class Zap < Effect
 
   def initialize size
     @size = size
-    @speed = 1
-    @j = 0.upto(@size).reject { |i| i % @speed != 0 }.cycle
+    self.speed = 1
     clear
   end
 

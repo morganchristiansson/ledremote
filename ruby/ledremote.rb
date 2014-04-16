@@ -33,12 +33,13 @@ end
 
 ######## main
 
-corners = [ 61, # middle left
-           149, # back left
-           238, # back right
-           328, # middle right
-           419, # front right
-           499] # front left
+corners = [ 88, # back right
+           #379, # middle right
+           269, # front right
+           357, # front left
+           # 61, # middle left
+           599] # back left
+
 
 def escape_0 pixels
   pixels.map! { |p| p == 0 ? 1 : p }
@@ -46,24 +47,25 @@ end
 
 clear!
 
-#setpixel 0, [255]*3
+setpixel 0, [255]*3
 #trail
 #corners.each { |c| setpixel c }
 
-#$proc = lambda { $p }
-$proc = RainbowWheel.new
+=begin
+$proc = lambda { $p }
+$proc = $rotation = Rotating.new $proc
+=end
 
 #$proc = RainbowWheel.new(182)
-#$proc = $zap = Zap.new 182
+$proc = $zap = Zap.new(182)
+$proc = RightSide.new($proc)
 
 #$proc = $blur = Blur.new $proc
 
-#$proc = $rotation = Rotating.new $proc
 
-def right_side
-  # 238 + 182 + 80 = 500
-  [1]*3*238+$proc.call+[1]*3*80
-end
+#$proc = RightSide.new(Zap.new(182))
+
+$proc ||= RainbowWheel.new
 
 # wait for boot message
 $stderr.puts @serial.gets
@@ -85,14 +87,17 @@ loop do
     require 'pry' ; binding.pry
 
   when "\e[A"
-    $zap.speed += 1
+    $zap.speed += 1 if $zap
+    $rotation.speed += 1 if $rotation
   when "\e[B"
-    $zap.speed -= 1
+    $zap.speed -= 1 if $zap
+    $rotation.speed -= 1 if $rotation
   when "\e[C"
-    $zap.length += 1
+    $zap.length += 1 if $zap
+    $rotation.value += 1 if $rotation
   when "\e[D"
-    $zap.length -= 1
-
+    $zap.length -= 1 if $zap
+    $rotation.value -= 1 if $rotation
   when "\u0003"
     $stderr.puts "^C"
     exit
