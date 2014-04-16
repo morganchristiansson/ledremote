@@ -1,8 +1,11 @@
 require 'rubygems'
+require 'bundler/setup'
+
 require 'serialport'
-require './read_char'
 require 'timeout'
 require 'benchmark'
+
+require 'read_char'
 
 @serial = SerialPort.new("/dev/ttyACM0", "baud" => 1000000)
 

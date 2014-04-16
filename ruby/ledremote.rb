@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require 'bundler/setup'
-require './setup'
+$: << File.dirname(__FILE__)+"/lib"
+require 'setup'
 
 def clear!
   $p = CyclicArray.new(NUM_SUBPIXELS, 1)
