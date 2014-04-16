@@ -1,3 +1,4 @@
+$: << File.dirname(__FILE__)
 require 'rubygems'
 require 'bundler/setup'
 
@@ -14,6 +15,13 @@ require 'effects'
 NUM_PIXELS=600
 NUM_SUBPIXELS=NUM_PIXELS*3
 PAYLOAD_SIZE=1801
+
+corners = [ 88, # back right
+           #379, # middle right
+           269, # front right
+           357, # front left
+           # 61, # middle left
+           599] # back left
 
 def main_loop
   loop do
@@ -62,6 +70,18 @@ end
 
 def print_from_serial
   $stderr.write @serial.read_nonblock(10000) rescue nil
+end
+
+def clear!
+  $p = CyclicArray.new(NUM_SUBPIXELS, 1)
+end
+
+def white
+  $p = CyclicArray.new(NUM_SUBPIXELS, 255)
+end
+
+def setpixel i, values = [255,255,255]
+  $p[i*3, values.length] = values
 end
 
 class CyclicArray < Array

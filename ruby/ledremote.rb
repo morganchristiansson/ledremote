@@ -1,50 +1,13 @@
 #!/usr/bin/env ruby
-$: << File.dirname(__FILE__)+"/lib"
-require 'setup'
-
-def clear!
-  $p = CyclicArray.new(NUM_SUBPIXELS, 1)
-end
-
-def white
-  $p = CyclicArray.new(NUM_SUBPIXELS, 255)
-end
-
-def setpixel i, values = [255,255,255]
-  $p[i*3, values.length] = values
-end
-
-def trail
-  setpixel 0, [255]*3 +
-              [255]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3 +
-              [100]*3
-end
+require './lib/setup'
 
 ######## main
 
-corners = [ 88, # back right
-           #379, # middle right
-           269, # front right
-           357, # front left
-           # 61, # middle left
-           599] # back left
 
 
 clear!
 
 setpixel 0, [255]*3
-#trail
 #corners.each { |c| setpixel c }
 
 =begin
