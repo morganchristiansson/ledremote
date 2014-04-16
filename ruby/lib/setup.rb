@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require 'active_support/core_ext/enumerable'
 require 'serialport'
 require 'timeout'
 require 'benchmark'
