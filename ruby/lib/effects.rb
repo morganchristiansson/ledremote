@@ -54,7 +54,7 @@ class Wheel < Effect
       setpixel i, wheel((i + j) & 255)
     end
 
-    escape_0 @p
+    @p
   end
 end
 

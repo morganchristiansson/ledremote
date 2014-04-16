@@ -41,10 +41,6 @@ corners = [ 88, # back right
            599] # back left
 
 
-def escape_0 pixels
-  pixels.map! { |p| p == 0 ? 1 : p }
-end
-
 clear!
 
 setpixel 0, [255]*3
