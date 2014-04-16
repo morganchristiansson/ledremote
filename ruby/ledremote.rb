@@ -1,16 +1,12 @@
 #!/usr/bin/env ruby
 require './lib/setup'
 
-######## main
 
-
-
-clear!
-
-setpixel 0, [255]*3
-#corners.each { |c| setpixel c }
 
 =begin
+clear!
+setpixel 0, [255]*3
+#corners.each { |c| setpixel c }
 $proc = lambda { $p }
 $proc = $rotation = Rotating.new $proc
 =end
@@ -18,9 +14,6 @@ $proc = $rotation = Rotating.new $proc
 #$proc = RainbowWheel.new(182)
 $proc = $zap = Zap.new(182)
 $proc = RightSide.new($proc)
-
-#$proc = $blur = Blur.new $proc
-
 
 #$proc = RightSide.new(Zap.new(182))
 
