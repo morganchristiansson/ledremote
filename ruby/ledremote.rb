@@ -19,8 +19,7 @@ $proc = RightSide.new($proc)
 
 $proc ||= RainbowWheel.new
 
-# wait for boot message
-$stderr.puts @serial.gets
+wait_for_boot
 
 Thread.abort_on_exception=true
 

@@ -24,9 +24,15 @@ corners = [ 88, # back right
            599] # back left
 
 def main_loop
+  wait_for_boot
   loop do
     show $proc.call
   end
+end
+
+def wait_for_boot
+  # wait for boot message
+  $stderr.puts @serial.gets
 end
 
 def wait_until_ready
