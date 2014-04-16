@@ -15,6 +15,12 @@ NUM_PIXELS=600
 NUM_SUBPIXELS=NUM_PIXELS*3
 PAYLOAD_SIZE=1801
 
+def main_loop
+  loop do
+    show $proc.call
+  end
+end
+
 def wait_until_ready
   r = @serial.readchar
   $stderr.write r if $verbose

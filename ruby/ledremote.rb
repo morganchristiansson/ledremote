@@ -74,9 +74,7 @@ Thread.abort_on_exception=true
 
 Thread.new do
 #begin
-  loop do
-    show $proc.call
-  end
+  main_loop
 end
 
 loop do
