@@ -16,7 +16,7 @@ NUM_PIXELS=600
 NUM_SUBPIXELS=NUM_PIXELS*3
 PAYLOAD_SIZE=1801
 
-corners = [ 88, # back right
+CORNERS = [ 88, # back right
            #379, # middle right
            269, # front right
            357, # front left
@@ -24,7 +24,6 @@ corners = [ 88, # back right
            599] # back left
 
 def main_loop
-  wait_for_boot
   loop do
     show $proc.call
   end
@@ -104,4 +103,7 @@ class CyclicArray < Array
     super *args
   end
 end
+
+wait_for_boot
+sleep 1
 

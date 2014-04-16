@@ -42,8 +42,11 @@ class RightSide
 end
 
 class Wheel < Effect
+  attr_accessor :speed
+
   def initialize size=NUM_PIXELS
     @size = size
+    @speed = 1
     @j = 0.upto(255).cycle
     clear
   end
@@ -51,7 +54,7 @@ class Wheel < Effect
   def call
     j = @j.next
     (0...@size).each do |i|
-      setpixel i, wheel((i + j) & 255)
+      setpixel i, wheel((i + j*@speed) & 255)
     end
 
     @p
@@ -117,7 +120,7 @@ class Rotating
 
   def call
     pixels = @app.call
-    pixels.rotate(value*3)
+    pixels.rotate(-value*3)
   end
 
   def value
