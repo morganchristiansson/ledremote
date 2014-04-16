@@ -11,16 +11,13 @@ NUM_SUBPIXELS=1500
 PAYLOAD_SIZE=1501
 
 def wait_until_ready
-  timeout(1) do
-    until r=@serial.readchar
-      $stderr.write r
-    end
-    $stderr.write r
-    print_from_serial
-  end
+  r = @serial.readchar
+  $stderr.write if $verbose
+  print_from_serial
+
   true
-rescue Timeout::Error
-  false
+rescue EOFError
+  retry
 end
 
 def loop_time
@@ -39,7 +36,7 @@ def show pixels=$p
   #binding.pry
   @serial.write chunk.pack('C'*chunk.size)
   @serial.flush
-  $stderr.write "."
+  $stderr.write "." if $verbose
   return unless wait_until_ready
   #pixels = pixels.map { |i| i == "\n".ord ? "\n\n".bytes : i }.flatten
   pixels = pixels.map { |i| i == 10 ? 11: i }

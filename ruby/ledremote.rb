@@ -69,8 +69,9 @@ end
 $stderr.puts @serial.gets
 
 Thread.abort_on_exception=true
-#Thread.new do
-begin
+
+Thread.new do
+#begin
   loop do
     show $proc.call
   end
