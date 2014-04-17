@@ -1,9 +1,11 @@
 class Effect
+  attr_reader :size
+
   def setpixel i, values = [255,255,255]
     @p[i*3, values.length] = values
   end
   def clear
-    @p = Array.new(@size*3, 1)
+    @p = CyclicArray.new(size*3, 1)
   end
 end
 
@@ -38,6 +40,25 @@ class RightSide
   def call
     # 88 + 182 + 330 = 600
     [0]*3*88+@app.call+[0]*3*330
+  end
+end
+
+class RightAndBackSide
+  def initialize app
+    @app = app
+  end
+
+  def call
+    p = @app.call
+    p = p+p.each_slice(3).to_a.reverse!.flatten!
+
+    insert_deadsegment(p)
+
+    p
+  end
+
+  def self.size
+    CORNERS[1]
   end
 end
 
@@ -133,6 +154,40 @@ class Rotating
 
   def speed= v
     @speed = v
+  end
+end
+
+class FlyingRibbons < Effect
+  SEGMENT_LENGTH=27
+  STRANDS=[
+    [255,255,255],
+    [0,0,255],
+    [255,255,0],
+    [0,255,0],
+    [255,0,255],
+    [255,255,255],
+    [0,0,255],
+    [255,255,0],
+    [0,255,0],
+    [255,0,255]
+  ]
+
+  def initialize(size = self.class.length)
+    @size = size
+    clear
+    (0...self.class.length).each do |x|
+      c = STRANDS[x/SEGMENT_LENGTH%STRANDS.length]
+      setpixel(x, c)
+    end
+  end
+
+  def call
+    p = @p
+    @p.rotate!(3)
+    @p.slice(0, size*3)
+  end
+  def self.length
+    STRANDS.length*SEGMENT_LENGTH
   end
 end
 

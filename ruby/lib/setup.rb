@@ -23,6 +23,8 @@ CORNERS = [ 88, # back right
            # 61, # middle left
            599] # back left
 
+DEADLOOPMIDDLE=429
+
 def main_loop
   loop do
     show $proc.call
@@ -87,6 +89,12 @@ end
 
 def setpixel i, values = [255,255,255]
   $p[i*3, values.length] = values
+end
+
+def insert_deadsegment(p=$p)
+  length = NUM_SUBPIXELS-p.length
+  start = DEADLOOPMIDDLE*3 - length/2
+  p.insert(start, *[0]*length)
 end
 
 class CyclicArray < Array
