@@ -3,16 +3,33 @@ require './lib/setup'
 wait_for_boot
 
 C=[80,255,0]
+PINK = [0, 255, 59]
+GOLD = [80, 255, 0]
 
-clear!
-
-@speed = 0
-@multiplier = 0.9
-(0...10000).cycle.each do |offset|
-  (0...NUM_PIXELS).each do |i|
-    @multiplier -= 0.000_000_1
-    setpixel(i, C.map { |c| (c * Math.sin(i*@multiplier-offset*@speed)).to_i.abs })
+class Glimmer < Effect
+  def initialize app
+    @app = app
+    @multiplier = 0.9
   end
-  show $p
+
+  def call
+    pixels = @app.call
+
+    @multiplier -= 0.0001
+
+    pixels = pixels.each_slice(3).each_with_index.map do |rgb, i|
+      rgb.map! do |c|
+        (c * Math.sin(i*@multiplier)).to_i.abs
+      end
+    end.flatten
+
+    pixels
+  end
 end
+
+#$proc = Glimmer.new Proc.new { GOLD * NUM_PIXELS }
+#$proc = Glimmer.new RainbowWheel.new
+$proc = RainbowWheel.new
+
+main_loop
 
