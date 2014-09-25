@@ -58,6 +58,8 @@ def show pixels=$p
     return
   end
 
+  pixels = pixels.each_slice(3).map { |g, r, b| [r, g, b] }.flatten!
+
   chunk = ["\n".ord,0]
   @serial.write chunk.pack('C'*chunk.size)
   @serial.flush
