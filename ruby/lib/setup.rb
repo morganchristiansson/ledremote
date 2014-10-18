@@ -82,7 +82,7 @@ def print_from_serial
 end
 
 def clear!
-  $p = CyclicArray.new(NUM_SUBPIXELS, 1)
+  $p = CyclicArray.new(NUM_SUBPIXELS, 0)
 end
 
 def white

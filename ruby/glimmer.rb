@@ -4,7 +4,7 @@ wait_for_boot
 
 C=[80,255,0]
 PINK = [0, 255, 59]
-GOLD = [80, 255, 0]
+GOLD = [255, 80, 0]
 
 class Glimmer < Effect
   def initialize app
