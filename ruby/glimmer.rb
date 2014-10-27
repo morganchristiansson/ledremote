@@ -9,7 +9,7 @@ GOLD = [255, 80, 0]
 class Glimmer < Effect
   def initialize app
     @app = app
-    @multiplier = 0.9
+    @multiplier = 0.2
   end
 
   def call
@@ -27,9 +27,9 @@ class Glimmer < Effect
   end
 end
 
-#$proc = Glimmer.new Proc.new { GOLD * NUM_PIXELS }
+$proc = Glimmer.new Proc.new { GOLD * NUM_PIXELS }
 #$proc = Glimmer.new RainbowWheel.new
-$proc = RainbowWheel.new
+#$proc = RainbowWheel.new
 
 main_loop
 
