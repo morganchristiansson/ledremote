@@ -17,7 +17,7 @@ NUM_SUBPIXELS=NUM_PIXELS*3
 PAYLOAD_SIZE=1801
 
 CORNERS = [ 88, # back right
-           #379, # middle right
+           #178, # middle right
            269, # front right
            357, # front left
            # 61, # middle left
