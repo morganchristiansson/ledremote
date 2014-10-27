@@ -33,7 +33,7 @@ end
 
 def wait_for_boot
   # wait for boot message
-  $stderr.puts @serial.gets
+  #$stderr.puts @serial.gets
 end
 
 def wait_until_ready
