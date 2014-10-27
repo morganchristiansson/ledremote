@@ -10,7 +10,7 @@ require 'benchmark'
 require 'read_char'
 require 'effects'
 
-@serial = SerialPort.new("/dev/ttyACM0", "baud" => 1000000)
+@serial = SerialPort.new(ENV["SERIALDEV"] || "/dev/ttyACM0", "baud" => 115200)
 
 NUM_PIXELS=600
 NUM_SUBPIXELS=NUM_PIXELS*3
